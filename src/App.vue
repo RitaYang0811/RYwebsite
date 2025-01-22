@@ -42,8 +42,8 @@ import gsap from "gsap";
 const { y } = useWindowScroll();
 const isScrolled = ref(false);
 const theme = ref(localStorage.getItem("theme") || "dark");
-const cursor = ref(null);
-const cursorFollower = ref(null);
+const cursor = ref<HTMLElement | null>(null);
+const cursorFollower = ref<HTMLElement | null>(null);
 
 // Watch scroll position for nav styling
 watch(y, (newY) => {
