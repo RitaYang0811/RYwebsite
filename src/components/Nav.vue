@@ -55,11 +55,12 @@ const theme = ref(localStorage.getItem("theme") || "dark");
 let lastScrollY = 0;
 watch(y, (newY) => {
   isScrolled.value = newY > 50;
+
   // 確定滾動方向並更新導航欄狀態
   if (newY > lastScrollY && newY > 100) {
     // 向下滾動且超過100px時隱藏
     isHidden.value = true;
-  } else {
+  } else if (newY < lastScrollY || newY < 100) {
     isHidden.value = false;
   }
   lastScrollY = newY;
@@ -113,7 +114,7 @@ const toggleTheme = () => {
     }
   }
   &--hidden {
-    transform: translateY(-120%);
+    transform: translate(0, -100%);
   }
   &__logo {
     font-size: 2rem;

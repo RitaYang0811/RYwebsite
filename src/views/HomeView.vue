@@ -124,6 +124,7 @@ onMounted(() => {
         // markers: true,
       },
       y: 100,
+      opacity: 0,
       duration: 0.3,
       stagger: 0.2,
       immediateRender: false, // 防止初始渲染時的閃爍

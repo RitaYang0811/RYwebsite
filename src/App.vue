@@ -66,13 +66,6 @@ const onLinkLeave = () => {
 
 // Initialize GSAP animations and cursor events
 onMounted(() => {
-  gsap.from(".nav", {
-    y: -100,
-    opacity: 0,
-    duration: 1,
-    ease: "power4.out",
-  });
-
   // Add cursor event listeners
   document.addEventListener("mousemove", onMouseMove);
 
