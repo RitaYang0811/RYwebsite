@@ -15,10 +15,18 @@
 
       <!-- 導航選單 -->
       <div class="nav__links" :class="{ active: isMenuOpen }">
-        <router-link to="/" class="nav__link">Home</router-link>
-        <router-link to="/about" class="nav__link">About</router-link>
-        <router-link to="/projects" class="nav__link">Projects</router-link>
-        <router-link to="/contact" class="nav__link">Contact</router-link>
+        <router-link to="/" class="nav__link" @click="closeMenu"
+          >Home</router-link
+        >
+        <router-link to="/about" class="nav__link" @click="closeMenu"
+          >About</router-link
+        >
+        <router-link to="/projects" class="nav__link" @click="closeMenu"
+          >Projects</router-link
+        >
+        <router-link to="/contact" class="nav__link" @click="closeMenu"
+          >Contact</router-link
+        >
         <button
           class="theme-toggle"
           @click="toggleTheme"
@@ -59,6 +67,12 @@ const toggleMenu = () => {
   isMenuOpen.value = !isMenuOpen.value;
   // 當選單打開時禁止背景滾動
   document.body.style.overflow = isMenuOpen.value ? "hidden" : "";
+};
+
+const closeMenu = () => {
+  isMenuOpen.value = false;
+  document.body.style.overflow = "";
+  window.scrollTo(0, 0); // 滾動到頂部
 };
 // Theme toggle function
 const toggleTheme = () => {
@@ -154,8 +168,8 @@ const toggleTheme = () => {
       background-color: var(--primary-color);
       transition: width 0.3s ease;
     }
-    &:hover,
-    &.router-link-active {
+    &.router-link-active,
+    &.router-link-exact-active {
       color: var(--primary-color);
 
       &::after {
@@ -235,7 +249,6 @@ const toggleTheme = () => {
   left: 0;
   width: 100%;
   height: 100vh;
-  //   background: rgba(0, 0, 0, 0.5);
   z-index: -1;
 }
 </style>
