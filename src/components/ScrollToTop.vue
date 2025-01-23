@@ -28,11 +28,11 @@ const checkScroll = () => {
   clearTimeout(scrollTimeout);
 
   // 顯示按鈕的條件：滾動超過視窗高度的 50%
-  isVisible.value = window.scrollY > window.innerHeight * 0.5;
+  isVisible.value = window.scrollY > window.innerHeight * 0.3;
 
   // 添加節流，避免過度觸發
   scrollTimeout = setTimeout(() => {
-    isVisible.value = window.scrollY > window.innerHeight * 0.5;
+    isVisible.value = window.scrollY > window.innerHeight * 0.3;
   }, 100);
 };
 

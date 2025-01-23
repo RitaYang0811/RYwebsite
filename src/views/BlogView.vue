@@ -302,6 +302,10 @@ onMounted(() => {
 
   &:hover {
     transform: translateY(-10px);
+
+    .blog-card__link {
+      animation: linkWiggle 1s ease-in-out infinite;
+    }
   }
 
   &__image {
@@ -360,11 +364,31 @@ onMounted(() => {
     color: var(--primary-color);
     text-decoration: none;
     font-weight: 600;
-    transition: opacity 0.3s ease;
+    transition: all 0.3s ease;
+    display: inline-block;
 
     &:hover {
       opacity: 0.8;
+      animation: linkWiggle 1s ease-in-out infinite;
     }
+  }
+}
+
+@keyframes linkWiggle {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(5px);
+  }
+  50% {
+    transform: translateX(0);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+  100% {
+    transform: translateX(0);
   }
 }
 

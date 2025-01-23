@@ -196,7 +196,7 @@ onMounted(() => {
   border-radius: 15px;
   overflow: hidden;
   transition: transform 0.3s ease;
-  border: 1px solid #00ffd5;
+  // border: 1px solid #00ffd5;
 
   &:hover {
     transform: translateY(-10px);
@@ -277,7 +277,7 @@ onMounted(() => {
 
   &__tag {
     padding: 0.3rem 0.8rem;
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--tag-color);
     border-radius: 15px;
     font-size: 0.9rem;
     color: var(--primary-color);

@@ -105,8 +105,8 @@ onUnmounted(() => {
   --text-color: #ffffff;
   --shadow-color: #303030;
   --accent-color: #ff7824;
+  --tag-color: #434343;
   --nav-bg: rgba(10, 10, 10, 0.8);
-  --card-bg: rgba(255, 255, 255, 0.05);
   --hover-bg: rgba(255, 255, 255, 0.1);
   --cursor-color: #00ffd5;
 }
@@ -119,8 +119,8 @@ onUnmounted(() => {
   --text-color: #0a0a0a;
   --shadow-color: #d4d4d4;
   --accent-color: #ff7824;
+  --tag-color: #ededed;
   --nav-bg: rgba(255, 255, 255, 0.8);
-  --card-bg: rgba(0, 0, 0, 0.05);
   --hover-bg: rgba(0, 0, 0, 0.1);
   --cursor-color: #ff006f;
 }

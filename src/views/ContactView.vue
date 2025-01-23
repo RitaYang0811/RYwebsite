@@ -90,27 +90,27 @@ import gsap from "gsap";
 const socialLinks = [
   {
     title: "GitHub",
-    username: "@yourusername",
+    username: "@RitaYang0811",
     icon: "💻",
-    url: "https://github.com/yourusername",
+    url: "https://github.com/RitaYang0811",
   },
   {
-    title: "LinkedIn",
-    username: "Your Name",
-    icon: "👔",
-    url: "https://linkedin.com/in/yourusername",
+    title: "Medium",
+    username: "@ritayang0811",
+    icon: "✏️",
+    url: "https://medium.com/@ritayang0811",
   },
   {
-    title: "Twitter",
-    username: "@yourusername",
-    icon: "🐦",
-    url: "https://twitter.com/yourusername",
+    title: "Instagran",
+    username: "@ritata_luv",
+    icon: "🥰",
+    url: "https://www.instagram.com/ritata_luv/",
   },
   {
     title: "Email",
-    username: "your.email@example.com",
+    username: "ritayang0811@gmail.com",
     icon: "📧",
-    url: "mailto:your.email@example.com",
+    url: "ritayang0811@gmail.com",
   },
 ];
 
@@ -262,6 +262,7 @@ onMounted(() => {
   }
 
   &__username {
+    color: var(--accent-color);
     opacity: 0.8;
     font-size: 0.9rem;
   }

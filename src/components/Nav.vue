@@ -24,6 +24,9 @@
         <router-link to="/projects" class="nav__link" @click="closeMenu"
           >Projects</router-link
         >
+        <router-link to="/blog" class="nav__link" @click="closeMenu"
+          >Blog</router-link
+        >
         <router-link to="/contact" class="nav__link" @click="closeMenu"
           >Contact</router-link
         >
