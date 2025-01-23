@@ -138,18 +138,21 @@ onMounted(() => {
     ease: "power4.out",
   });
 
-  //   gsap.from(".project-card", {
-  //     y: 100,
-  //     opacity: 0,
-  //     duration: 0.8,
-  //     stagger: 0.2,
-  //     ease: "power4.out",
-  //     scrollTrigger: {
-  //       trigger: ".projects-grid",
-  //       start: "top center+=100",
-  //       toggleActions: "play none none reverse",
-  //     },
-  //   });
+  gsap.from(".project-card", {
+    y: 200,
+    duration: 1,
+    stagger: 0.2,
+    delay: 0.2,
+    ease: "power4.out",
+    scrollTrigger: {
+      // markers: true,
+      trigger: ".projects-grid",
+      start: "top 80%",
+      end: "bottom top",
+      toggleActions: "play none none reset",
+    },
+    immediateRender: false,
+  });
 });
 </script>
 

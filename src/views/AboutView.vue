@@ -145,9 +145,10 @@ onMounted(() => {
       toggleActions: "play none none reverse",
     },
     y: 50,
-    opacity: 0,
+    // opacity: 0,
     duration: 0.8,
     stagger: 0.2,
+    immediateRender: false,
   });
 
   // Timeline animation
@@ -230,7 +231,7 @@ onMounted(() => {
 }
 
 .skill-card {
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--card-color);
   border-radius: 15px;
   padding: 2rem;
   transition: transform 0.3s ease;

@@ -69,61 +69,66 @@ const techStack = [
 ];
 
 onMounted(() => {
-  // Hero animations
-  const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
+  // 添加小延遲確保 DOM 完全準備好
+  setTimeout(() => {
+    // Hero animations
+    const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
 
-  tl.from(".hero__title-line", {
-    y: 100,
-    opacity: 0,
-    duration: 1,
-    stagger: 0.2,
-  })
-    .from(
-      ".hero__subtitle",
-      {
-        y: 20,
-        opacity: 0,
-        duration: 0.8,
-      },
-      "-=0.5"
-    )
-    .from(
-      ".hero__cta",
-      {
-        y: 20,
-        opacity: 0,
-        duration: 0.8,
-      },
-      "-=0.5"
-    )
-    .from(
-      ".hero__grid-item",
-      {
-        scale: 0,
-        opacity: 0,
-        duration: 0.5,
-        stagger: {
-          amount: 1,
-          grid: "auto",
-          from: "center",
+    tl.from(".hero__title-line", {
+      y: 100,
+      opacity: 0,
+      duration: 1,
+      stagger: 0.2,
+    })
+      .from(
+        ".hero__subtitle",
+        {
+          y: 20,
+          opacity: 0,
+          duration: 0.8,
         },
-      },
-      "-=1"
-    );
+        "-=0.5"
+      )
+      .from(
+        ".hero__cta",
+        {
+          y: 20,
+          opacity: 0,
+          duration: 0.8,
+        },
+        "-=0.5"
+      )
+      .from(
+        ".hero__grid-item",
+        {
+          scale: 0,
+          opacity: 0,
+          duration: 0.5,
+          stagger: {
+            amount: 1,
+            grid: "auto",
+            from: "center",
+          },
+        },
+        "-=1"
+      );
 
-  // Scroll animations for tech stack
-  //   gsap.from(".tech-item", {
-  //     scrollTrigger: {
-  //       trigger: ".tech-stack",
-  //       start: "top bottom",
-  //       end: "top top",
-  //       toggleActions: "play none none none",
-  //     },
-  //     y: 50,
-  //     opacity: 0,
-  //     duration: 0.2,
-  //     stagger: 0.1,
-  //   });
+    // Scroll animations for tech stack
+    gsap.from(".tech-item", {
+      scrollTrigger: {
+        trigger: ".tech-stack",
+        start: "top center",
+        end: "bottom top",
+        toggleActions: "play none none reset",
+        once: false, // 允許重複觸發
+        // markers: true,
+      },
+      y: 100,
+      duration: 0.3,
+      stagger: 0.2,
+      immediateRender: false, // 防止初始渲染時的閃爍
+    });
+  }, 100);
 });
 </script>
 
@@ -167,7 +172,17 @@ onMounted(() => {
     margin-bottom: 3rem;
     opacity: 0.8;
   }
-
+  &__cta {
+    display: flex;
+    justify-content: center;
+    // gap: 1rem;
+    margin-top: 2rem;
+    @media (max-width: 576px) {
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+  }
   &__background {
     position: absolute;
     top: 0;
@@ -197,12 +212,12 @@ onMounted(() => {
 
 .button {
   display: inline-block;
+  margin: 0 1rem;
   padding: 1rem 2rem;
   border-radius: 30px;
   text-decoration: none;
   font-weight: 600;
   transition: all 0.3s ease;
-  margin: 0 1rem;
 
   &--primary {
     background: var(--primary-color);
@@ -254,6 +269,7 @@ onMounted(() => {
   border-radius: 15px;
   text-align: center;
   transition: all 0.3s ease;
+  // opacity: 1;
 
   &:hover {
     transform: translateY(-10px);

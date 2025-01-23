@@ -171,13 +171,21 @@ const nextPage = () => {
 };
 
 const animateCards = () => {
-  //   gsap.from(".blog-card", {
-  //     y: 50,
-  //     opacity: 0,
-  //     duration: 0.6,
-  //     stagger: 0.1,
-  //     ease: "power3.out",
-  //   });
+  gsap.from(".blog-card", {
+    y: 200,
+    duration: 1,
+    stagger: 0.2,
+    delay: 0.2,
+    ease: "power4.out",
+    scrollTrigger: {
+      // markers: true,
+      trigger: ".blog-grid",
+      start: "top 80%",
+      end: "bottom top",
+      toggleActions: "play none none reset",
+    },
+    immediateRender: false,
+  });
 };
 
 const onPostHover = (index: number) => {
