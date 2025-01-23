@@ -25,23 +25,24 @@
     </nav>
 
     <main class="main">
-      <router-view v-slot="{ Component }">
+      <RouterView />
+      <!-- <router-view v-slot="{ Component }">
         <transition name="page" mode="out-in">
           <component :is="Component" />
         </transition>
-      </router-view>
+      </router-view> -->
     </main>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, watch } from "vue";
-import { useWindowScroll } from "@vueuse/core";
-import gsap from "gsap";
+import { ref, onMounted, onUnmounted, watch } from 'vue';
+import { useWindowScroll } from '@vueuse/core';
+import gsap from 'gsap';
 
 const { y } = useWindowScroll();
 const isScrolled = ref(false);
-const theme = ref(localStorage.getItem("theme") || "dark");
+const theme = ref(localStorage.getItem('theme') || 'dark');
 const cursor = ref<HTMLElement | null>(null);
 const cursorFollower = ref<HTMLElement | null>(null);
 
@@ -52,8 +53,8 @@ watch(y, (newY) => {
 
 // Theme toggle function
 const toggleTheme = () => {
-  theme.value = theme.value === "light" ? "dark" : "light";
-  localStorage.setItem("theme", theme.value);
+  theme.value = theme.value === 'light' ? 'dark' : 'light';
+  localStorage.setItem('theme', theme.value);
 };
 
 // Custom cursor movement
@@ -63,14 +64,14 @@ const onMouseMove = (e: MouseEvent) => {
       x: e.clientX,
       y: e.clientY,
       duration: 0,
-      ease: "none",
+      ease: 'none',
     });
 
     gsap.to(cursorFollower.value, {
       x: e.clientX,
       y: e.clientY,
       duration: 0.3,
-      ease: "power2.out",
+      ease: 'power2.out',
     });
   }
 };
@@ -78,46 +79,46 @@ const onMouseMove = (e: MouseEvent) => {
 // Cursor hover effect
 const onLinkHover = () => {
   if (cursor.value && cursorFollower.value) {
-    cursor.value.classList.add("cursor--hover");
-    cursorFollower.value.classList.add("cursor-follower--hover");
+    cursor.value.classList.add('cursor--hover');
+    cursorFollower.value.classList.add('cursor-follower--hover');
   }
 };
 
 const onLinkLeave = () => {
   if (cursor.value && cursorFollower.value) {
-    cursor.value.classList.remove("cursor--hover");
-    cursorFollower.value.classList.remove("cursor-follower--hover");
+    cursor.value.classList.remove('cursor--hover');
+    cursorFollower.value.classList.remove('cursor-follower--hover');
   }
 };
 
 // Initialize GSAP animations and cursor events
 onMounted(() => {
-  gsap.from(".nav", {
+  gsap.from('.nav', {
     y: -100,
     opacity: 0,
     duration: 1,
-    ease: "power4.out",
+    ease: 'power4.out',
   });
 
   // Add cursor event listeners
-  document.addEventListener("mousemove", onMouseMove);
+  document.addEventListener('mousemove', onMouseMove);
 
   // Add hover effect to all links and buttons
-  const links = document.querySelectorAll("a, button");
+  const links = document.querySelectorAll('a, button');
   links.forEach((link) => {
-    link.addEventListener("mouseenter", onLinkHover);
-    link.addEventListener("mouseleave", onLinkLeave);
+    link.addEventListener('mouseenter', onLinkHover);
+    link.addEventListener('mouseleave', onLinkLeave);
   });
 });
 
 onUnmounted(() => {
-  document.removeEventListener("mousemove", onMouseMove);
+  document.removeEventListener('mousemove', onMouseMove);
 
   // Remove hover effect listeners
-  const links = document.querySelectorAll("a, button");
+  const links = document.querySelectorAll('a, button');
   links.forEach((link) => {
-    link.removeEventListener("mouseenter", onLinkHover);
-    link.removeEventListener("mouseleave", onLinkLeave);
+    link.removeEventListener('mouseenter', onLinkHover);
+    link.removeEventListener('mouseleave', onLinkLeave);
   });
 });
 </script>
@@ -164,7 +165,7 @@ body {
 }
 
 body {
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
 }
 
 .app {
@@ -270,7 +271,7 @@ body {
     position: relative;
 
     &::after {
-      content: "";
+      content: '';
       position: absolute;
       bottom: 0;
       left: 0;
