@@ -1,5 +1,5 @@
 {
-  "name": "personal-website",
+  "name": "RY-personal-website",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -13,12 +13,16 @@
     "@types/gsap": "^1.20.2",
     "@vueuse/core": "^12.4.0",
     "gsap": "^3.12.7",
+    "highlight.js": "^11.11.1",
+    "i18n": "^0.15.3",
+    "markdown-it": "^14.1.1",
     "sass": "^1.83.4",
     "vue": "^3.5.13",
     "vue-router": "^4.5.0"
   },
   "devDependencies": {
     "@tsconfig/node18": "^18.2.4",
+    "@types/markdown-it": "^14.1.2",
     "@types/node": "^22.10.7",
     "@vitejs/plugin-vue": "^5.2.1",
     "@vue/tsconfig": "^0.7.0",

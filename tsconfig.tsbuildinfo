@@ -1,1 +1,20 @@
-{"root":["./src/app.vue","./src/main.ts","./src/vite-env.d.ts","./src/components/nav.vue","./src/components/scrolltotop.vue","./src/router/index.ts","./src/views/aboutview.vue","./src/views/blogview.vue","./src/views/contactview.vue","./src/views/homeview.vue","./src/views/projectsview.vue"],"version":"5.6.3"}
+{
+  "root": [
+    "./src/app.cy.ts",
+    "./src/app.vue",
+    "./src/main.ts",
+    "./src/vite-env.d.ts",
+    "./src/components/helloworld.cy.ts",
+    "./src/components/helloworld.vue",
+    "./src/components/techicon.vue",
+    "./src/router/index.ts",
+    "./src/views/aboutview.cy.ts",
+    "./src/views/aboutview.vue",
+    "./src/views/blogview.vue",
+    "./src/views/contactview.vue",
+    "./src/views/homeview.vue",
+    "./src/views/projectsview.vue"
+  ],
+  "errors": true,
+  "version": "5.6.3"
+}
