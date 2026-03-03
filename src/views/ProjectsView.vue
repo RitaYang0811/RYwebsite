@@ -94,7 +94,6 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from "vue";
-import gsap from "gsap";
 
 import project1 from "@/assets/images/project-01.png";
 import project2 from "@/assets/images/project-02.png";
@@ -172,20 +171,6 @@ const onKeydown = (e: KeyboardEvent) => {
 
 onMounted(() => {
   document.addEventListener("keydown", onKeydown);
-
-  gsap.from(".projects-hero__title", {
-    y: 60,
-    opacity: 0,
-    duration: 0.8,
-    ease: "power4.out",
-  });
-  gsap.from(".projects-hero__subtitle", {
-    y: 30,
-    opacity: 0,
-    duration: 0.8,
-    delay: 0.15,
-    ease: "power4.out",
-  });
 });
 
 onUnmounted(() => {
@@ -198,6 +183,11 @@ onUnmounted(() => {
   padding: 2rem;
   max-width: 1200px;
   margin: 0 auto;
+}
+
+@keyframes heroFadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 // ── Hero ──
@@ -216,11 +206,13 @@ onUnmounted(() => {
     color: var(--text-color);
     margin-bottom: 0.5rem;
     letter-spacing: -0.02em;
+    animation: heroFadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
   }
 
   &__subtitle {
     font-size: 1rem;
     opacity: 0.45;
+    animation: heroFadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.12s both;
   }
 }
 

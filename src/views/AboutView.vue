@@ -234,29 +234,6 @@ const experience = [
 ];
 
 onMounted(() => {
-  // 初始動畫
-  const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
-
-  tl.from(".about-hero__title", {
-    y: 100,
-    opacity: 0,
-    duration: 1,
-  })
-    .from(".about-hero__text", {
-      x: -50,
-      opacity: 0,
-      duration: 0.8,
-    })
-    .from(
-      ".image-container",
-      {
-        x: 50,
-        opacity: 0,
-        duration: 0.8,
-      },
-      "-=0.8",
-    );
-
   // Skills 卡片動畫 - 使用 CSS transition 替代 GSAP 以避免對齊問題
   const skillCards = document.querySelectorAll(".skill-card");
 
@@ -378,6 +355,21 @@ onUnmounted(() => {
   margin: 0 auto;
 }
 
+@keyframes heroFadeUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes heroFadeLeft {
+  from { opacity: 0; transform: translateX(-30px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes heroFadeRight {
+  from { opacity: 0; transform: translateX(30px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
 .about-hero {
   min-height: 80vh;
   display: flex;
@@ -389,6 +381,7 @@ onUnmounted(() => {
     color: var(--primary-color);
     margin-bottom: 3rem;
     text-align: center;
+    animation: heroFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
   }
 
   &__content {
@@ -396,6 +389,14 @@ onUnmounted(() => {
     grid-template-columns: 1fr 1fr;
     gap: 4rem;
     align-items: center;
+  }
+
+  &__text {
+    animation: heroFadeLeft 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
+  }
+
+  &__image {
+    animation: heroFadeRight 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
   }
 
   &__description {

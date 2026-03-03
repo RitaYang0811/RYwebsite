@@ -169,13 +169,6 @@ const onLinkLeave = () => {
 
 // Initialize GSAP animations and cursor events
 onMounted(() => {
-  gsap.from(".nav", {
-    y: -100,
-    opacity: 0,
-    duration: 1,
-    ease: "power4.out",
-  });
-
   // Add cursor event listeners
   document.addEventListener("mousemove", onMouseMove);
 
@@ -317,6 +310,7 @@ body {
   right: 0;
   width: 100%;
   z-index: 100;
+  animation: navIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
   background: transparent;
   transition: all 0.3s ease;
   backdrop-filter: blur(10px);
@@ -471,6 +465,11 @@ body {
 .page-leave-to {
   opacity: 0;
   transform: translateY(-20px);
+}
+
+@keyframes navIn {
+  from { transform: translateY(-100%); opacity: 0; }
+  to   { transform: translateY(0);     opacity: 1; }
 }
 
 // ── Back to top ──
