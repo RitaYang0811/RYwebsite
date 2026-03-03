@@ -204,8 +204,8 @@ onUnmounted(() => {
   --card-bg: rgba(255, 255, 255, 0.03);
   --hover-bg: rgba(255, 255, 255, 0.06);
   --cursor-color: #e8584c;
-  --glass-bg: rgba(255, 255, 255, 0.03);
-  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-bg: rgba(255, 255, 255, 0.08);
+  --glass-border: rgba(255, 255, 255, 0.1);
 }
 
 .light-theme {
@@ -468,8 +468,14 @@ body {
 }
 
 @keyframes navIn {
-  from { transform: translateY(-100%); opacity: 0; }
-  to   { transform: translateY(0);     opacity: 1; }
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 // ── Back to top ──
