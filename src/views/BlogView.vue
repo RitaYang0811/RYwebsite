@@ -7,61 +7,72 @@
       </p>
     </section>
 
-    <section class="blog-categories">
-      <button
-        v-for="category in categories"
-        :key="category"
-        :class="['category-btn', { active: selectedCategory === category }]"
-        @click="filterByCategory(category)"
-      >
-        {{ category }}
-      </button>
-    </section>
-
-    <section class="blog-grid">
-      <article
-        v-for="(post, index) in filteredPosts"
-        :key="index"
-        class="blog-card"
-        @mouseenter="onPostHover(index)"
-        @mouseleave="onPostLeave(index)"
-      >
-        <div class="blog-card__image">
-          <img :src="post.image" :alt="post.title" />
-          <div class="blog-card__category">{{ post.category }}</div>
-        </div>
-        <div class="blog-card__content">
-          <div class="blog-card__meta">
-            <span class="blog-card__date">{{ post.date }}</span>
-            <span class="blog-card__read-time"
-              >{{ post.readTime }} min read</span
-            >
-          </div>
-          <h2 class="blog-card__title">{{ post.title }}</h2>
-          <p class="blog-card__excerpt">{{ post.excerpt }}</p>
-          <router-link :to="post.link" class="blog-card__link"
-            >Read More →</router-link
+    <div class="blog-layout">
+      <!-- Sidebar tag filter -->
+      <aside class="blog-sidebar">
+        <h3 class="blog-sidebar__title">Tags</h3>
+        <div class="blog-sidebar__tags">
+          <button
+            v-for="category in categories"
+            :key="category"
+            :class="[
+              'tag-btn',
+              { 'tag-btn--active': selectedCategory === category },
+            ]"
+            @click="filterByCategory(category)"
           >
+            {{ category }}
+          </button>
         </div>
-      </article>
-    </section>
+      </aside>
 
-    <div class="pagination">
-      <button
-        class="pagination__btn"
-        :disabled="currentPage === 1"
-        @click="prevPage"
-      >
-        ← Previous
-      </button>
-      <span class="pagination__current">Page {{ currentPage }}</span>
-      <button
-        class="pagination__btn"
-        :disabled="currentPage === totalPages"
-        @click="nextPage"
-      >
-        Next →
-      </button>
+      <!-- Main content -->
+      <div class="blog-main">
+        <div class="blog-grid">
+          <RouterLink
+            v-for="(post, index) in filteredPosts"
+            :key="post.slug + currentPage"
+            :to="{ name: 'blog-detail', params: { slug: post.slug } }"
+            class="blog-card"
+            :style="{ '--i': index }"
+          >
+            <div class="blog-card__image">
+              <img :src="post.image" :alt="post.title" />
+              <div class="blog-card__category">{{ post.category }}</div>
+            </div>
+            <div class="blog-card__content">
+              <div class="blog-card__meta">
+                <span class="blog-card__date">{{ post.date }}</span>
+                <span class="blog-card__read-time"
+                  >{{ post.readTime }} min read</span
+                >
+              </div>
+              <h2 class="blog-card__title">{{ post.title }}</h2>
+              <p class="blog-card__excerpt">{{ post.excerpt }}</p>
+            </div>
+          </RouterLink>
+        </div>
+
+        <div v-if="totalPages > 1" class="pagination">
+          <button
+            class="pagination__btn"
+            :disabled="currentPage === 1"
+            @click="changePage(currentPage - 1)"
+          >
+            ← Prev
+          </button>
+          <span class="pagination__info"
+            >{{ currentPage }} / {{ totalPages }}</span
+          >
+          <button
+            class="pagination__btn"
+            :disabled="currentPage === totalPages"
+            @click="changePage(currentPage + 1)"
+          >
+            Next →
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -69,77 +80,19 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from "vue";
 import gsap from "gsap";
+import { posts, categories } from "@/content/blog/posts";
 
-// Import images
-import blog1 from "@/assets/images/blog-01.jpg";
-import blog2 from "@/assets/images/blog-02.jpg";
-import blog3 from "@/assets/images/blog-03.jpg";
-import blog4 from "@/assets/images/blog-04.jpg";
-
-const categories = [
-  "All",
-  "Vue.js",
-  "TypeScript",
-  "Web Performance",
-  "UI/UX",
-  "DevOps",
-];
 const selectedCategory = ref("All");
 const currentPage = ref(1);
-const postsPerPage = 6;
-
-const posts = [
-  {
-    title: "Building Scalable Vue.js Applications",
-    excerpt:
-      "Learn how to structure large-scale Vue.js applications with best practices and proven patterns.",
-    image: blog1,
-    category: "Vue.js",
-    date: "March 15, 2024",
-    readTime: 8,
-    link: "/blog/scalable-vue-apps",
-  },
-  {
-    title: "Advanced TypeScript Patterns",
-    excerpt:
-      "Explore advanced TypeScript patterns and techniques to write more maintainable code.",
-    image: blog2,
-    category: "TypeScript",
-    date: "March 10, 2024",
-    readTime: 12,
-    link: "/blog/typescript-patterns",
-  },
-  {
-    title: "Optimizing Web Performance",
-    excerpt:
-      "Tips and techniques for improving your website's loading speed and performance.",
-    image: blog3,
-    category: "Web Performance",
-    date: "March 5, 2024",
-    readTime: 10,
-    link: "/blog/web-performance",
-  },
-  {
-    title: "Modern UI/UX Design Principles",
-    excerpt:
-      "Understanding modern design principles and how to apply them in web development.",
-    image: blog4,
-    category: "UI/UX",
-    date: "March 1, 2024",
-    readTime: 7,
-    link: "/blog/design-principles",
-  },
-];
+const postsPerPage = 10;
 
 const filteredPosts = computed(() => {
   const filtered =
     selectedCategory.value === "All"
       ? posts
       : posts.filter((post) => post.category === selectedCategory.value);
-
   const start = (currentPage.value - 1) * postsPerPage;
-  const end = start + postsPerPage;
-  return filtered.slice(start, end);
+  return filtered.slice(start, start + postsPerPage);
 });
 
 const totalPages = computed(() => {
@@ -147,292 +100,284 @@ const totalPages = computed(() => {
     selectedCategory.value === "All"
       ? posts
       : posts.filter((post) => post.category === selectedCategory.value);
-  return Math.ceil(filtered.length / postsPerPage);
+  return Math.ceil(filtered.length / postsPerPage) || 1;
 });
 
 const filterByCategory = (category: string) => {
   selectedCategory.value = category;
   currentPage.value = 1;
-  animateCards();
 };
 
-const prevPage = () => {
-  if (currentPage.value > 1) {
-    currentPage.value--;
-    animateCards();
-  }
-};
-
-const nextPage = () => {
-  if (currentPage.value < totalPages.value) {
-    currentPage.value++;
-    animateCards();
-  }
-};
-
-const animateCards = () => {
-  gsap.from(".blog-card", {
-    y: 200,
-    duration: 1,
-    stagger: 0.2,
-    delay: 0.2,
-    ease: "power4.out",
-    scrollTrigger: {
-      // markers: true,
-      trigger: ".blog-grid",
-      start: "top 80%",
-      end: "bottom top",
-      toggleActions: "play none none reset",
-    },
-    immediateRender: false,
-  });
-};
-
-const onPostHover = (index: number) => {
-  gsap.to(`#post-${index}`, {
-    y: -10,
-    duration: 0.3,
-    ease: "power2.out",
-  });
-};
-
-const onPostLeave = (index: number) => {
-  gsap.to(`#post-${index}`, {
-    y: 0,
-    duration: 0.3,
-    ease: "power2.out",
-  });
+const changePage = (page: number) => {
+  currentPage.value = page;
 };
 
 onMounted(() => {
   gsap.from(".blog-hero__title", {
-    y: 100,
+    y: 60,
     opacity: 0,
-    duration: 1,
+    duration: 0.8,
     ease: "power4.out",
   });
-
   gsap.from(".blog-hero__subtitle", {
-    y: 50,
-    opacity: 0,
-    duration: 1,
-    delay: 0.2,
-    ease: "power4.out",
-  });
-
-  gsap.from(".category-btn", {
     y: 30,
     opacity: 0,
-    duration: 0.6,
-    // stagger: 0.1,
-    ease: "power3.out",
+    duration: 0.8,
+    delay: 0.15,
+    ease: "power4.out",
   });
-
-  animateCards();
 });
 </script>
 
 <style lang="scss" scoped>
 .blog {
   padding: 2rem;
-  max-width: 1400px;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
+// ── Hero ──
 .blog-hero {
-  min-height: 40vh;
+  min-height: 30vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
-  margin-bottom: 4rem;
+  margin-bottom: 3rem;
 
   &__title {
-    font-size: 4rem;
-    color: var(--primary-color);
-    margin-bottom: 1rem;
+    font-size: 3rem;
+    font-weight: 300;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.02em;
   }
 
   &__subtitle {
-    font-size: 1.5rem;
-    opacity: 0.8;
+    font-size: 1rem;
+    opacity: 0.45;
   }
 }
 
-.blog-categories {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 1rem;
-  margin-bottom: 4rem;
+// ── Layout: sidebar + main ──
+.blog-layout {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 2.5rem;
+  align-items: start;
 }
 
-.category-btn {
-  padding: 0.8rem 1.5rem;
-  border: 2px solid var(--primary-color);
-  background: var(--card-color);
+// ── Sidebar ──
+.blog-sidebar {
+  position: sticky;
+  top: 100px;
+
+  &__title {
+    font-size: 0.7rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    opacity: 0.4;
+    margin-bottom: 0.75rem;
+  }
+
+  &__tags {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+}
+
+.tag-btn {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 0.4rem 0.75rem;
+  border: none;
+  border-left: 2px solid transparent;
+  border-radius: 6px;
+  background: transparent;
   color: var(--text-color);
-  border-radius: 25px;
+  font-size: 0.82rem;
+  font-weight: 400;
+  opacity: 0.55;
   cursor: pointer;
-  transition: all 0.3s ease;
-  font-weight: 600;
+  transition: all 0.25s ease;
 
-  &:hover,
-  &.active {
-    background: var(--primary-color);
-    color: var(--background-color);
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 255, 213, 0.2);
+  &:hover {
+    opacity: 0.85;
+    background: var(--hover-bg);
+  }
+
+  &--active {
+    opacity: 1;
+    color: var(--primary-color);
+    background: var(--glass-bg);
+    border-left: 2px solid var(--primary-color);
+    font-weight: 500;
   }
 }
 
+// ── Card grid ──
 .blog-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-  margin-bottom: 4rem;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
 }
 
 .blog-card {
-  background: var(--card-color);
-  border-radius: 15px;
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  background: var(--glass-bg, rgba(255, 255, 255, 0.03));
+  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.08));
+  border-radius: 10px;
   overflow: hidden;
-  transition: transform 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease;
+  // CSS staggered entrance
+  animation: cardIn 0.45s ease both;
+  animation-delay: calc(var(--i, 0) * 0.06s);
 
   &:hover {
-    transform: translateY(-10px);
+    transform: translateY(-4px);
+    border-color: var(--primary-color);
 
-    .blog-card__link {
-      animation: linkWiggle 1s ease-in-out infinite;
+    .blog-card__image img {
+      transform: scale(1.04);
     }
   }
 
   &__image {
     position: relative;
     width: 100%;
-    height: 200px;
+    height: 150px;
     overflow: hidden;
 
     img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 0.3s ease;
+      transition: transform 0.4s ease;
     }
   }
 
   &__category {
     position: absolute;
-    top: 1rem;
-    right: 1rem;
-    padding: 0.5rem 1rem;
-    background: var(--primary-color);
-    color: var(--background-color);
-    border-radius: 20px;
-    font-size: 0.9rem;
-    font-weight: 600;
+    top: 0.6rem;
+    right: 0.6rem;
+    padding: 0.25rem 0.6rem;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(6px);
+    color: #fff;
+    border-radius: 4px;
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.03em;
   }
 
   &__content {
-    padding: 1.5rem;
+    padding: 1rem 1.1rem;
   }
 
   &__meta {
     display: flex;
-    gap: 1rem;
-    margin-bottom: 1rem;
-    font-size: 0.9rem;
-    opacity: 0.8;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.72rem;
+    opacity: 0.4;
   }
 
   &__title {
-    font-size: 1.5rem;
-    color: var(--primary-color);
-    margin-bottom: 1rem;
-    line-height: 1.3;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 0.35rem;
+    line-height: 1.4;
   }
 
   &__excerpt {
-    font-size: 1rem;
+    font-size: 0.8rem;
     line-height: 1.6;
-    opacity: 0.8;
-    margin-bottom: 1.5rem;
-  }
-
-  &__link {
-    color: var(--primary-color);
-    text-decoration: none;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    display: inline-block;
-
-    &:hover {
-      opacity: 0.8;
-      animation: linkWiggle 1s ease-in-out infinite;
-    }
+    opacity: 0.55;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 }
 
-@keyframes linkWiggle {
-  0% {
-    transform: translateX(0);
+@keyframes cardIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
   }
-  25% {
-    transform: translateX(5px);
-  }
-  50% {
-    transform: translateX(0);
-  }
-  75% {
-    transform: translateX(5px);
-  }
-  100% {
-    transform: translateX(0);
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
+// ── Pagination ──
 .pagination {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 2rem;
+  gap: 1.5rem;
+  margin-top: 2.5rem;
 
   &__btn {
-    padding: 0.8rem 1.5rem;
-    background: var(--primary-color);
-    color: var(--background-color);
-    border: none;
-    border-radius: 25px;
+    padding: 0.45rem 1rem;
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
+    color: var(--text-color);
+    border-radius: 6px;
+    font-size: 0.8rem;
     cursor: pointer;
-    transition: all 0.3s ease;
-    font-weight: 600;
-
-    &:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
+    transition: all 0.25s ease;
 
     &:not(:disabled):hover {
-      transform: translateY(-3px);
-      box-shadow: 0 5px 15px rgba(0, 255, 213, 0.2);
+      border-color: var(--primary-color);
+      color: var(--primary-color);
+    }
+
+    &:disabled {
+      opacity: 0.25;
+      cursor: not-allowed;
     }
   }
 
-  &__current {
-    font-size: 1.1rem;
-    color: var(--primary-color);
+  &__info {
+    font-size: 0.78rem;
+    opacity: 0.4;
   }
 }
 
+// ── Responsive ──
 @media (max-width: 768px) {
-  .blog-hero {
-    &__title {
-      font-size: 3rem;
-    }
+  .blog-layout {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
 
-    &__subtitle {
-      font-size: 1.2rem;
+  .blog-sidebar {
+    position: static;
+
+    &__tags {
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+  }
+
+  .tag-btn {
+    width: auto;
+    border-bottom: 2px solid transparent;
+    &--active {
+      border-left: none;
+      border-bottom: 2px solid var(--primary-color);
     }
   }
 
@@ -440,13 +385,8 @@ onMounted(() => {
     grid-template-columns: 1fr;
   }
 
-  .blog-categories {
-    gap: 0.5rem;
-  }
-
-  .category-btn {
-    padding: 0.6rem 1rem;
-    font-size: 0.9rem;
+  .blog-hero__title {
+    font-size: 2.2rem;
   }
 }
 </style>
