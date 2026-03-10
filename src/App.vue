@@ -119,6 +119,7 @@ const scrollToTop = () => {
 const toggleTheme = () => {
   theme.value = theme.value === "light" ? "dark" : "light";
   localStorage.setItem("theme", theme.value);
+  closeMenu();
 };
 
 // Mobile menu
@@ -329,10 +330,6 @@ body {
     background: var(--nav-bg);
     border-bottom: 1px solid var(--glass-border);
     box-shadow: 0 1px 24px rgba(0, 0, 0, 0.12);
-
-    .nav__container {
-      padding: 1rem 2rem;
-    }
   }
 
   &__logo {

@@ -146,15 +146,15 @@ const projects: Project[] = [
     liveUrl: "https://ritayang0811.github.io/js_finalProject/",
     githubUrl: "",
   },
-  {
-    title: "Weather Dashboard",
-    description:
-      "A weather dashboard application with dynamic data visualization and location-based forecasts.",
-    image: project4,
-    technologies: ["Vue.js", "D3.js", "Weather API", "Vite"],
-    liveUrl: "",
-    githubUrl: "",
-  },
+  // {
+  //   title: "Weather Dashboard",
+  //   description:
+  //     "A weather dashboard application with dynamic data visualization and location-based forecasts.",
+  //   image: project4,
+  //   technologies: ["Vue.js", "D3.js", "Weather API", "Vite"],
+  //   liveUrl: "",
+  //   githubUrl: "",
+  // },
 ];
 
 const openModal = (project: Project) => {
@@ -186,8 +186,14 @@ onUnmounted(() => {
 }
 
 @keyframes heroFadeUp {
-  from { opacity: 0; transform: translateY(30px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 // ── Hero ──
