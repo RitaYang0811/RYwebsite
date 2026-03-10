@@ -2,9 +2,9 @@ import blog1 from "@/assets/images/blog-01.jpg";
 import blog2 from "@/assets/images/blog-02.jpg";
 import blog3 from "@/assets/images/blog-03.jpg";
 import blog4 from "@/assets/images/blog-04.jpg";
-import jsExecutionContextStack from "@/assets/images/js-execution-context-stack.png";
-import jsScopeHoisting from "@/assets/images/js-scope-hoisting.png";
-import vue3ComponentArchitecture from "@/assets/images/vue3-component-architecture.png";
+import jsExecutionContextStack from "@/assets/images/js-execution-context-stack.jpg";
+import jsScopeHoisting from "@/assets/images/js-scope-hoisting.jpg";
+import vue3ComponentArchitecture from "@/assets/images/vue3-component-architecture.jpg";
 
 export interface BlogPost {
   slug: string;
